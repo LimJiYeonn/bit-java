@@ -207,7 +207,7 @@ where salary = (
 	where eno = 20
     );
 
-
+-- 20번 부서의 최고 급여를 받는 직원보다 적게 받는 사람은? 
 -- 변형2 600보다 적게 받는 사람
 select name 
 from table12
@@ -251,6 +251,8 @@ where salary < any(
 일어 40
 일어 05   -> 결과
 */
+
+
 
 
 -- ex42) 통계함수
