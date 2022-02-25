@@ -437,7 +437,7 @@ having sum(salary) >= 1000;  -- 그룹핑된 결과를 필터링
 
 
 
--- ex60) B binary 체크 : 비교할 때 대소문자 구분하여 검색
+-- ex60) B binary 체크 : 비교할 때 대소문자 구분하지 않고 검색
 -- 없을 때
 drop table tablea;
 CREATE TABLE tablea (
@@ -452,6 +452,8 @@ insert into tablea values(null, 'TigerLion');
 
 select * from tableA
 where name = 'tiger';
+
+select * from tableA;
 
 -- 있을 때
 drop table tablea;
@@ -499,7 +501,7 @@ select * from tableb; -- 결과 : 00023
 -- G
 -- age, year(근속연수)
 -- 서로 곱하고 싶다. 만들때부터 연산을 하여 필드에 넣고 싶다. 
--- 만들 때 부터 필드끼리 연산을 하도록하여 바로 넣기 - default / expression에 넣기
+-- 만들 때 부터 필드끼리 연산을 하도록하여 테이블이 생성될 때  바로 넣기 - default / expression에 넣기
 /*
 `width` INT NULL,
   `height` INT NULL,
@@ -833,6 +835,7 @@ select ST.store_id, sum(amount)
 select f.title, i.inventory_id, r.rental_date, r.return_date, f.rental_duration, 
 -- datediff(r.return_date, r.rental_date)    ifnull(r.return_date, 'Unkown') as '실제 대여 기간'  
 IFNULL(DATEDIFF(RT.return_date, RT.rental_date), 'Unknown')
+-- coalesce(DATEDIFF(RT.return_date, RT.rental_date), 'Unknown')
 from film f join inventory i on f.film_id = i.film_id
 join rental r on r.inventory_id = i.inventory_id;
 
@@ -841,7 +844,6 @@ IFNULL(DATEDIFF(RT.return_date, RT.rental_date), 'Unknown')
 	from rental RT join inventory IV on RT.inventory_id = IV.inventory_id
 	join film FL on IV.film_id = FL.film_id
 	where DATEDIFF(IFNULL(RT.return_date, curdate()), RT.rental_date) > FL.rental_duration; 
-    
     
     
 -- 20. 고객별 연체 건수가 많은 수부터 출력하시오(고객 first_name, last_name, 연체건수)
@@ -895,15 +897,16 @@ select CS.first_name, CS.last_name, FL.title, top5.tot_cnt
     -- 배우 이름(first_name, last_name), 출연작 타이틀, 작품 출시일을 출력하시오
     -- (정렬순서: 배우ID, 타이틀, 출시일) 
 
-/*    
+
     select 
     from (
-    select actor_id
-    from actor
-    where name = 'WALTER TORN'
-    )as cnt join film_actor fa on a.actor_id = fa.actor_id
+		select actor_id
+		from actor
+		where name = 'WALTER TORN'
+    )as cnt join film_actor fa 
+		on a.actor_id = fa.actor_id
     join film f on f.film_id = fa.film_id
-*/
+
 
  
     
