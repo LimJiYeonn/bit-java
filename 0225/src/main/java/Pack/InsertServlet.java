@@ -37,13 +37,12 @@ public class InsertServlet extends HttpServlet{
 		request.setCharacterEncoding("utf-8");
 
 		String id = request.getParameter("id");
-
 		String pwd= request.getParameter("pwd");
-
 		String email = request.getParameter("email");
-
 		String phone = request.getParameter("phone");
-		System.out.println(111111111);
+		String birthday = request.getParameter("birthday");
+		String blood_type = request.getParameter("blood_type");
+
 		
 
 		int n=0;
@@ -124,8 +123,24 @@ public class InsertServlet extends HttpServlet{
 		if(n>0){
 
 			pw.println( id + "님! 성공적으로 가입되었습니다.<br/>");
+			
+			if(id.contentEquals("admin")) {
+				pw.println("관리자로 로그인 하였습니다.");	
+			}
 
 		}else{
+			if (id.length() == 0 || id =="" )
+			{
+				pw.println("ID는 필수입니다.");				
+			}
+			else if (pwd.length() == 0 || pwd == "" ) 
+			{
+				pw.println("Password는 필수입니다.");
+			}
+			else if (email.length() == 0 || email == "" || email.contains("@"))
+			{
+				pw.println("E-Mail은 필수입니다.");	
+			}
 
 			pw.println("오류로 인해 가입에 실패했습니다.<br/>");
 
