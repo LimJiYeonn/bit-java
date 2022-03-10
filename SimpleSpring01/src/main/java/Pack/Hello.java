@@ -29,7 +29,7 @@ class Printer{
 	private static Printer printer = null;
 	private static int count = 0;
 	private Printer(){}
-	public synchronized static Printer getInstance() {
+	public synchronized static Printer getInstance() { // 성능 좋지 않다. 
 		// 멀티스레드 환경에서 두 개 이상의 스레드가 인스턴스를 동시에 생성 못하게
 			if(printer == null) {
 				printer = new Printer();
